@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DESVIO</title>
+<style>
+  body {
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+  }
+
+  .image-container {
+    max-width: 80%;
+  }
+
+  .image-container img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto; /* Center the image horizontally */
+  }
+</style>
+</head>
+<body>
+
+<div class="image-container">
+    {% for cam in cameras %}
+        <p style="color: white;">{{ cam.location.city }}</p>
+        <p style="color: white;">{{ cam.location.region_code }}</p>
+        <p style="color: white;">{{ cam.location.area_code }}</p>
+        <p style="color: white;">{{ cam.location.longitude }}</p>
+        <p style="color: white;">{{ cam.location.latitude }}</p>
+        <p style="color: white;">{{ cam.location.country_code }}</p>
+        <p style="color: white;">{{ cam.location.country_name }}</p>
+        <img src="data:{{ cam.mime }};base64,{{ cam.data }}" alt="Camera {{ loop.index }}" style="color: white;">
+    {% endfor %}
+</div>
+
+</body>
+</html>

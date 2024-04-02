@@ -1,21 +1,38 @@
-import requests
 from django.shortcuts import render
 
-from desvio.settings import RANDOM_IMAGE
-
-
-def get_image_url(image_path):
-    response = requests.get(image_path, allow_redirects=True)
-    final_url = response.url
-    return final_url
+from sitee.models import Camera, Image
 
 
 def index(request):
-    images = [
+    images = Image.objects.order_by("?")
+    return render(
+        request, "index.html",
         {
-            "name": f"i{i+1}",
-            "url": get_image_url(RANDOM_IMAGE),
+            "images": [
+                {
+                    "url": i.url,
+                    "name": i.name,
+                }
+                for i in images
+            ],
         }
-        for i in range(6)
-    ]
-    return render(request, "index.html", {"images": images})
+    )
+
+
+def random_camera_view(request):
+    cameras = Camera.objects.order_by("?")[:1]
+
+    return render(
+        request, "random_camera.html",
+        {
+            "cameras": [
+                {
+                    "mime": c.mime,
+                    "data": c.data,
+                    "name": c.name,
+                    "location": c.location,
+                }
+                for c in cameras
+            ]
+        }
+    )

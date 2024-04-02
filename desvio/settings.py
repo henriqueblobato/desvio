@@ -9,8 +9,13 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
+import os
 from pathlib import Path
+
+import shodan
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -23,7 +28,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-4g#qw&85wbv8vz%asxsgvonaep3lug08xgs2cjpakm-d@0q1po"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -126,3 +131,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
 RANDOM_IMAGE = 'https://picsum.photos/100/200'
+
+shodan_api = shodan.Shodan(
+    os.getenv("SHODAN_KEY")
+)
