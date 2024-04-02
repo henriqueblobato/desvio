@@ -25,10 +25,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-4g#qw&85wbv8vz%asxsgvonaep3lug08xgs2cjpakm-d@0q1po"
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.getenv("DEBUG", "False").lower() in ("true", "1", "t")
 
 ALLOWED_HOSTS = ['*']
 
@@ -135,7 +135,7 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
-RANDOM_IMAGE = 'https://picsum.photos/100/200'
+RANDOM_IMAGE = 'https://picsum.photos/200/200'
 
 shodan_api = shodan.Shodan(
     os.getenv("SHODAN_KEY")
