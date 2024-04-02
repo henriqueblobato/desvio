@@ -1,9 +1,8 @@
 ARG PYTHON_VERSION=3.8.18
 FROM python:${PYTHON_VERSION}-slim as base
 
-ENV PYTHONDONTWRITEBYTECODE=1
-
-ENV PYTHONUNBUFFERED=1
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1
 
 WORKDIR /app
 
@@ -25,7 +24,6 @@ USER appuser
 
 COPY . .
 
-RUN python manage.py migrate
-EXPOSE 80
+COPY entrypoint.sh /usr/src/app/entrypoint.sh
 
-CMD gunicorn 'desvio.wsgi' --bind=0.0.0.0:80
+ENTRYPOINT ["/usr/src/app/entrypoint.sh"]
