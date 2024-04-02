@@ -45,7 +45,7 @@ USER appuser
 COPY . .
 
 # Expose the port that the application listens on.
-EXPOSE 8000
+EXPOSE 80
 
 # Run the application.
-CMD gunicorn 'desvio.wsgi' --bind=0.0.0.0:8000
+CMD gunicorn 'desvio.wsgi' --bind=0.0.0.0:80
