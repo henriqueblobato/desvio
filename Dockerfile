@@ -44,6 +44,8 @@ USER appuser
 # Copy the source code into the container.
 COPY . .
 
+# run migrations and collect static files
+RUN python manage.py migrate
 # Expose the port that the application listens on.
 EXPOSE 80
 
