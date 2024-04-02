@@ -1,3 +1,5 @@
+import json
+
 from django.shortcuts import render
 
 from sitee.models import Camera, Image
@@ -30,7 +32,12 @@ def random_camera_view(request):
                     "mime": c.mime,
                     "data": c.data,
                     "name": c.name,
-                    "location": c.location,
+                    "city": c.city,
+                    "region_code": c.region_code,
+                    "longitude": c.longitude,
+                    "latitude": c.latitude,
+                    "country_code": c.country_code,
+                    "country_name": c.country_name,
                 }
                 for c in cameras
             ]

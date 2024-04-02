@@ -25,20 +25,24 @@ class Command(BaseCommand):
     help = "Closes the specified poll for voting"
 
     def handle(self, *args, **options):
-        # shodan_query = 'screenshot.label:webcam country:"BR"'
-        # results = shodan_api.search(shodan_query, limit=50)
-        # for i, result in enumerate(results["matches"]):
-        #     ss = result["screenshot"]
-        #     mime = ss.get("mime")
-        #     data = ss.get("data")
-        #     g = Camera.objects.get_or_create(
-        #         name=f"c{i+1}",
-        #         # screenshot=screenshot,
-        #         mime=mime,
-        #         data=data,
-        #         location=result["location"],
-        #     )
-        #     self.stdout.write(self.style.SUCCESS(f"Successfully created camera {i+1}"))
+        shodan_query = 'screenshot.label:webcam country:"BR"'
+        results = shodan_api.search(shodan_query, limit=50)
+        for i, result in enumerate(results["matches"]):
+            ss = result["screenshot"]
+            mime = ss.get("mime")
+            data = ss.get("data")
+            location = result["location"]
+            g = Camera.objects.get_or_create(
+                name=f"c{i+1}",
+                mime=mime,
+                data=data,
+                city=location.get("city"),
+                latitude=location.get("latitude"),
+                longitude=location.get("longitude"),
+                country_code=location.get("country_code"),
+                region_code=location.get("region_code"),
+            )
+            self.stdout.write(self.style.SUCCESS(f"Successfully created camera {i+1}"))
 
         for c in range(50):
             final_url = requests.get("https://picsum.photos/500/500", allow_redirects=True).url
