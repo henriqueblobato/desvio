@@ -6,7 +6,7 @@ from sitee.models import Camera, Image
 
 
 def index(request):
-    images = Image.objects.order_by("?")
+    images = Image.objects.order_by("?")[:6]
     return render(
         request, "index.html",
         {
